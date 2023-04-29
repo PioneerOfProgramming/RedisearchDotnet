@@ -22,7 +22,7 @@ namespace RediSearchCore.Infrastructure.Repositories
 
         public List<Airports> Search(string sentence)
         {
-            Query q = new Query($"(@code:{ sentence })|(@city:{ sentence }*)|(@Tag:{{{ sentence }}})")
+            Query q = new Query($"(@Code:{sentence})|(@City:{sentence}*)|(@Tag:{{{sentence}}})")
                 .SetLanguage("portuguese");
 
             //.AddFilter(new Query.NumericFilter("price", 0, 1000))
@@ -36,7 +36,8 @@ namespace RediSearchCore.Infrastructure.Repositories
 
         public async Task<IEnumerable<Airports>> SearchAsync(string sentence)
         {
-            Query q = new Query($"(@code:{ sentence })|(@city:{ sentence }*)|(@Tag:{{{ sentence }}})")
+            //Query q = new Query("*");
+            Query q = new Query($"(@Code:{sentence})|(@City:{sentence}*)|(@Tag:{{{sentence}}})")
                 .SetLanguage("portuguese");
 
             //.AddFilter(new Query.NumericFilter("price", 0, 1000))
@@ -56,7 +57,7 @@ namespace RediSearchCore.Infrastructure.Repositories
             sch.AddTextField("Name");
             sch.AddTextField("City", 5);
             sch.AddTextField("State");
-            sch.AddTextField("Country");            
+            sch.AddTextField("Country");
             sch.AddTagField("Tag");
             sch.AddGeoField("GeoPoint");
 
